@@ -5,23 +5,32 @@ const menus = document.querySelectorAll(".menus button");
 menus.forEach((menu) => 
     menu.addEventListener("click", (event) => getNewsCategory(event))
 );
+let url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
 
-const getLatestNews = async() => {
-    const url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
+const getNews = async() => {
     const response = await fetch(url); // await 없으면 pending(미뤄짐, 대기상태) 뜸
     const data = await response.json();
     newsList = data.articles
     render()
+}
+
+const getLatestNews = async() => {
+    url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
+    getNews()
 };
 
 const getNewsCategory = async(evnet) => {
     const gatcgory = evnet.target.textContent.toLowerCase()
-    const url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${gatcgory}`);
+    url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${gatcgory}`);
     
-    const response = await fetch(url);
-    const data = await response.json();
-    newsList = data.articles
-    render();
+    getNews()
+}
+
+const getNewsByKeyword = async() => {
+    const keyword = document.getElementById("search-input").value;
+    url = new URL(`https://news-timesbysong.netlify.app/top-headlines?q=${keyword}`);
+
+    getNews()
 }
 
 const render = ()=>{
