@@ -7,7 +7,7 @@ menus.forEach((menu) =>
 );
 
 const getLatestNews = async() => {
-    const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines`);
+    const url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
     const response = await fetch(url); // await 없으면 pending(미뤄짐, 대기상태) 뜸
     const data = await response.json();
     newsList = data.articles
@@ -16,7 +16,7 @@ const getLatestNews = async() => {
 
 const getNewsCategory = async(evnet) => {
     const gatcgory = evnet.target.textContent.toLowerCase()
-    const url = new URL(`http://times-node-env.eba-appvq3ef.ap-northeast-2.elasticbeanstalk.com/top-headlines?category=${gatcgory}`);
+    const url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${gatcgory}`);
     
     const response = await fetch(url);
     const data = await response.json();
