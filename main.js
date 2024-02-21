@@ -6,6 +6,7 @@ menus.forEach((menu) =>
     menu.addEventListener("click", (event) => getNewsCategory(event))
 );
 let url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
+// let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
 
 const getNews = async() => {
     const response = await fetch(url); // await 없으면 pending(미뤄짐, 대기상태) 뜸
@@ -16,19 +17,51 @@ const getNews = async() => {
 
 const getLatestNews = async() => {
     url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
+    // url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
     getNews()
 };
 
 const getNewsCategory = async(evnet) => {
-    const gatcgory = evnet.target.textContent.toLowerCase()
-    url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${gatcgory}`);
+    const category = evnet.target.textContent.toLowerCase()
+    url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${catcgory}`);
+    // url = new URL(`https://newsapi.org/v2/top-headlines?category=${category}&country=us&apiKey=${API_KEY}`);
     
     getNews()
 }
 
+// const toggleMenu = () => {
+//     const menu = document.querySelector(".menus");
+//     menu.classList.toggle("show-menu")
+// }
+
+// const toggleSearch = () => {
+//     const searchGroup = document.querySelector()
+// }
+
+const openNav = () => {
+    document.getElementById("mySidenav").style.width = "250px";
+  };
+  
+  const closeNav = () => {
+    document.getElementById("mySidenav").style.width = "0";
+  };
+
+const openSearchBox = () => {
+    let inputArea = document.getElementById("input-area");
+    console.log("inputArea",inputArea)
+
+    if (inputArea.style.display === "none") {
+      inputArea.style.display = "flex";
+    } else {
+      inputArea.style.display = "none";
+    }
+  };
+  
 const getNewsByKeyword = async() => {
     const keyword = document.getElementById("search-input").value;
+    console.log(keyword)
     url = new URL(`https://news-timesbysong.netlify.app/top-headlines?q=${keyword}`);
+    // url = new URL(`https://newsapi.org/v2/top-headlines?q=${keyword}country=us&apiKey=${API_KEY}`);
 
     getNews()
 }
