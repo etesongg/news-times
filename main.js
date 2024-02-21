@@ -23,7 +23,7 @@ const getLatestNews = async() => {
 
 const getNewsCategory = async(evnet) => {
     const category = evnet.target.textContent.toLowerCase()
-    url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${catcgory}`);
+    url = new URL(`https://news-timesbysong.netlify.app/top-headlines?category=${category}`);
     // url = new URL(`https://newsapi.org/v2/top-headlines?category=${category}&country=us&apiKey=${API_KEY}`);
     
     getNews()
@@ -48,7 +48,6 @@ const openNav = () => {
 
 const openSearchBox = () => {
     let inputArea = document.getElementById("input-area");
-    console.log("inputArea",inputArea)
 
     if (inputArea.style.display === "none") {
       inputArea.style.display = "flex";
@@ -59,7 +58,6 @@ const openSearchBox = () => {
   
 const getNewsByKeyword = async() => {
     const keyword = document.getElementById("search-input").value;
-    console.log(keyword)
     url = new URL(`https://news-timesbysong.netlify.app/top-headlines?q=${keyword}`);
     // url = new URL(`https://newsapi.org/v2/top-headlines?q=${keyword}country=us&apiKey=${API_KEY}`);
 
