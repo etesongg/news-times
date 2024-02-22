@@ -7,18 +7,26 @@ menus.forEach((menu) =>
 );
 let url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
 // let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
+let totalResult = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
 
 const getNews = async() => {
     try{
+        url.searchParams.set("page", page); // url 뒤에 붙여주는 함수(js에서 제공하는 URL을 사용하면 사용할 수 있음) &page=page 형태로 붙음
+        url.searchParams.set("pageSize", pageSize); // 파라미터를 붙인 후에 fetch로 url 호출
+
         const response = await fetch(url); // await 없으면 pending(미뤄짐, 대기상태) 뜸
         const data = await response.json();
         if(response.status === 200){
             if(data.articles.length === 0){
-                console.log(data.articles)
                 throw new Error("No result for this search")
             }
-            newsList = data.articles
-            render()
+            totalResult = data.totalResults;
+            newsList = data.articles;
+            render();
+            paginationRender();
         }else{
             throw new Error(data.message)
         } 
@@ -103,6 +111,43 @@ const errorRender = (errorMessage) => {
         ${errorMessage}
     </div>`
     document.getElementById("news-board").innerHTML = errorHtml;
+}
+
+// totalResult, page, pageSize, groupSize, pageGroup, lastPage, firstPage, totalPages
+const paginationRender = () => {
+    const totalPages = Math.ceil(totalResult/pageSize);
+    const pageGroup = Math.ceil(page/groupSize);
+    let lastPage = pageGroup * groupSize;
+    // 마지막 페이지 그룹이 그룹사이즈보다 작으면 lastPage = totalPages
+    if(lastPage > totalPages){
+        lastPage = totalPages;
+    }
+    const firstPage = lastPage - (groupSize - 1) <= 0? 1:lastPage - (groupSize - 1);
+
+    let paginationHTML = ""
+    if (firstPage > 1){
+    paginationHTML = `
+    <li class="page-item"><a class="page-link" onclick="moveToPage(${1})">&lt&lt</a></li>
+    <li class="page-item"><a class="page-link" onclick="moveToPage(${page - 1})">&lt</a></li>`;
+    }
+
+    for(let i = firstPage; i<=lastPage; i++){
+        paginationHTML += `
+        <li class="page-item ${i === page? "active":""}" onclick="moveToPage(${i})" ><a class="page-link">${i}</a></li>`
+    }
+
+    if(lastPage < totalPages){
+        paginationHTML += `
+        <li class="page-item"><a class="page-link" onclick="moveToPage(${page + 1})">&gt</a></li>
+        <li class="page-item"><a class="page-link" onclick="moveToPage(${totalPages})">&gt&gt</a></li>`
+    }
+
+    document.querySelector(".pagination").innerHTML = paginationHTML;
+}
+
+const moveToPage = (pageNum) => {
+    page = pageNum;
+    getNews(page);
 }
 
 getLatestNews();
