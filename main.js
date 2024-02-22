@@ -9,10 +9,22 @@ let url = new URL(`https://news-timesbysong.netlify.app/top-headlines`);
 // let url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
 
 const getNews = async() => {
-    const response = await fetch(url); // await 없으면 pending(미뤄짐, 대기상태) 뜸
-    const data = await response.json();
-    newsList = data.articles
-    render()
+    try{
+        const response = await fetch(url); // await 없으면 pending(미뤄짐, 대기상태) 뜸
+        const data = await response.json();
+        if(response.status === 200){
+            if(data.articles.length === 0){
+                console.log(data.articles)
+                throw new Error("No result for this search")
+            }
+            newsList = data.articles
+            render()
+        }else{
+            throw new Error(data.message)
+        } 
+    }catch(error){
+        errorRender(error.message)
+    }
 }
 
 const getLatestNews = async() => {
@@ -83,7 +95,14 @@ const render = ()=>{
             </div>
     `).join('')
 
-    document.getElementById('news-board').innerHTML = newsHTML
+    document.getElementById('news-board').innerHTML = newsHTML;
+}
+
+const errorRender = (errorMessage) => {
+    const errorHtml = `<div class="alert alert-danger" role="alert">
+        ${errorMessage}
+    </div>`
+    document.getElementById("news-board").innerHTML = errorHtml;
 }
 
 getLatestNews();
