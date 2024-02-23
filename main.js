@@ -154,6 +154,12 @@ const moveToPage = (pageNum) => {
     getNews(page);
 }
 
+const enterkey = () => {
+    if(window.event.keyCode == 13){
+        getNewsByKeyword();
+    }
+}
+
 getLatestNews();
 
 // 버튼들에 크릭이벤트 주기
