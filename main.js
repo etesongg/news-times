@@ -86,23 +86,27 @@ const getNewsByKeyword = async() => {
 
 const render = ()=>{
     newsList = newsList.filter(articles => articles.title !== "[Removed]");
-    const newsHTML = newsList.map(news=>`
-    <div class="row news">
-                <div class="col-lg-4">
-                    <img class="news-img-size" src=${news.urlToImage} alt="">
-                </div>
-                <div class="col-lg-8">
-                    <h2>${news.title}</h2>
-                    <p>
-                        ${news.description}
-                    </p>
-                    <div>
-                        ${news.source.name} ${news.publishedAt} ${news.content}
+    console.log(newsList)
+    
+    const newsHTML = newsList.map(news=>{
+        let splitPublishAt = news.publishedAt.split("T")[0];
+        return `
+        <div class="row news">
+                    <div class="col-lg-4">
+                        <img class="news-img-size" src=${news.urlToImage} alt="">
+                    </div>
+                    <div class="col-lg-8">
+                        <h2>${news.title}</h2>
+                        <p>
+                            ${news.description}
+                        </p>
+                        <div>
+                            Author: ${news.author} | source: ${news.source.name} | PublishedAt: ${splitPublishAt}
+                        </div>
                     </div>
                 </div>
-            </div>
-    `).join('')
-
+        `}).join('')
+        
     document.getElementById('news-board').innerHTML = newsHTML;
 }
 
