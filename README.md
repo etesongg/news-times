@@ -2,6 +2,7 @@
 
 ## The News Times website
 ![newstimes](https://github.com/etesongg/number-guess-game/assets/55964387/2a0ddbaf-7a4d-4556-94be-68b6eaf3ebcb)
+<br/>
 [위 사이트 접속하기](https://news-timesbysong.netlify.app/)
 
 ## 기능
