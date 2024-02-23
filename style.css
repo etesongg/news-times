@@ -1,3 +1,16 @@
+@font-face {
+    font-family: 'LeferiPoint-SpecialItalicA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-SpecialItalicA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.head-line a{
+    font-family: 'LeferiPoint-SpecialItalicA';
+    font-size: 300%;
+    text-decoration-line: none;
+    color: black;
+}
+
 .head-line{
     margin-top: 1em;
     display: flex;
@@ -49,7 +62,7 @@
         display: none;
         position: absolute;
         top: 50px; 
-        background-color: burlywood; 
+        background-color: #749EB2; 
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
     }
     .menus.show-menu {
@@ -65,8 +78,6 @@
     }
 } 
 
-
-
 .side-menu {
     height: 100%;
     width: 0;
@@ -74,7 +85,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: burlywood;
+    background-color: #749EB2;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
