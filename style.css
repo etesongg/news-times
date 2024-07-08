@@ -1,23 +1,10 @@
-@font-face {
-    font-family: 'LeferiPoint-SpecialItalicA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-SpecialItalicA.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-.head-line a{
-    font-family: 'LeferiPoint-SpecialItalicA';
-    font-size: 300%;
-    text-decoration-line: none;
-    color: black;
-}
-
-.head-line{
+.head-line {
     margin-top: 1em;
     display: flex;
     justify-content: center;
 }
 
-.head-line svg{
+.head-line svg {
     width: 430px;
 }
 
@@ -25,59 +12,31 @@
     margin-top: 1em;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* 버튼들 contain 범위 내에서 표현되게 함 */
+    flex-wrap: wrap; /* 상위 클래스 기준 영역을 넘어서 보여주지 않는다 */
     border-top: 1px solid #ebebeb;
-    border-bottom: 4px double #000;
+    border-bottom: 4px double black;
 }
 
-.menus button{
+.menus button {
     border: none;
     background: none;
     margin: 5px;
 }
 
-.menus button:hover{
+.menus button:hover {
     background-color: beige;
 }
 
-.news-img-size{
+.news-img-size {
     max-width: 100%;
     max-height: 250px;
 }
 
-.news{
+.news {
     border-bottom: 1px solid #ebebeb;
-    margin-top: 1em;
 }
 
-.fas.fa-bars{
-    display: none;
-}
-
-@media screen and (max-width: 768px) {
-    .menus {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        display: none;
-        position: absolute;
-        top: 50px; 
-        background-color: #749EB2; 
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-    }
-    .menus.show-menu {
-        display: flex;
-    }
-    .menus button {
-        width: 100%;
-        text-align: center;
-    }
-    .fas.fa-bars {
-        justify-content: center;
-        display: block;
-    }
-} 
-
+/* 사이드 메뉴 */
 .side-menu {
     height: 100%;
     width: 0;
@@ -85,7 +44,7 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #749EB2;
+    background-color: burlywood;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -117,30 +76,3 @@
     background-color: beige;
     border-radius: 3px;
   }
-
-#input-area{
-    display: none;
-}
-
-.icon{
-    display: flex;
-}
-
-.icon i{
-    margin: 5px;
-}
-
-.init{
-    display: flex;
-}
-
-.alert-danger{
-    text-align: center;
-}
-
-nav{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-}
