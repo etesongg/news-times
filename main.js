@@ -1,11 +1,13 @@
-import { KEY } from "./secrets.js";
+// import { KEY } from "./secrets.js";
+import { KEY } from "./times-api.js"
 
 const API_KEY = KEY.API_KEY; 
+const API_URL = KEY.API_URL;
 
 let newsList = [];
 
 const getLatestNews = async () => {
-    const url = new URL(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${API_KEY}`);
+    const url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
     const response = await fetch(url);
     const data = await response.json();
     newsList = data.articles;
