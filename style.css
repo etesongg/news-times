@@ -37,7 +37,7 @@
 }
 
 /* 사이드 메뉴 */
-.side-menu {
+/* .side-menu {
     height: 100%;
     width: 0;
     position: fixed;
@@ -75,4 +75,4 @@
   .side-menu-list button:hover {
     background-color: beige;
     border-radius: 3px;
-  }
+  } */
