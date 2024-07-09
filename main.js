@@ -5,16 +5,20 @@ const API_KEY = KEY.API_KEY;
 const API_URL = KEY.API_URL;
 
 let newsList = [];
+let url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
 const menus = document.querySelectorAll(".menus button")
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)))
 
+const getNews = async() => {
+  const response = await fetch(url);
+  const data = await response.json();
+  newsList = data.articles;
+  render();
+}
+
 const getLatestNews = async () => {
-    const url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
-    const response = await fetch(url);
-    const data = await response.json();
-    newsList = data.articles;
-    render();
-    console.log(newsList);
+    url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
+    getNews();
 }
 getLatestNews();
 
@@ -22,21 +26,14 @@ getLatestNews();
 // 카테고리별 뉴스 가져오기
 const getNewsByCategory = async (event) =>{
     const category = event.target.textContent.toLowerCase();
-    const url = new URL(`${API_URL}?country=us&category=${category}&apiKey=${API_KEY}`);
-    const response = await fetch(url);
-    const data = await response.json();
-    newsList = data.articles;
-    render()
+    url = new URL(`${API_URL}?country=us&category=${category}&apiKey=${API_KEY}`);
+    getNews();
 }
-
 
 const getNewsByKeyword = async() => {
   const keyword = document.getElementById("search-input").value;
-  const url = new URL(`${API_URL}?country=us&q=${keyword}&apiKey=${API_KEY}`);
-  const response = await fetch(url);
-  const data = await response.json();
-  newsList = data.articles;
-  render()
+  url = new URL(`${API_URL}?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  getNews();
 }
 
 document.querySelector(".search-button").addEventListener("click", getNewsByKeyword);
