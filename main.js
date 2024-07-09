@@ -41,10 +41,10 @@ document.querySelector(".search-button").addEventListener("click", getNewsByKeyw
 const render = () => {
     const newsHTML = newsList.map(news => `
         <div class="row news">
-          <div class="col-4">
+          <div class="col-lg-4">
             <img class="news-img-size" src="${news.urlToImage}" alt="">
           </div>
-          <div class="col-8">
+          <div class="col-lg-8">
             <h2>${news.title}</h2>
             <p>${news.description}</p>
             <div>${news.source.name} * ${news.publishedAt}</div>
