@@ -137,4 +137,8 @@
       justify-content: center;
       display: block;
   }
+  .head-line {
+    padding-bottom: 1em;
+    border-bottom: 4px double black;
+  }
 } 

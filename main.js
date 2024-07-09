@@ -6,7 +6,7 @@ const API_URL = KEY.API_URL;
 
 let newsList = [];
 let url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
-const menus = document.querySelectorAll(".menus button")
+const menus = document.querySelectorAll(".menus button, .side-menu-list")
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)))
 
 const getNews = async() => {
