@@ -103,4 +103,14 @@ const openSearchBox = () => {
 }
 document.querySelector(".search-icon").addEventListener("click", openSearchBox);
 
+// 사이드 메뉴
+const openNav = () => {
+  document.getElementById("mySidenav").style.width = "250px";
+};
+document.querySelector(".hamburger-icon").addEventListener("click", openNav);
+
+const closeNav = () => {
+  document.getElementById("mySidenav").style.width = "0";
+};
+document.querySelector(".closebtn").addEventListener("click", closeNav);
 
