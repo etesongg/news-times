@@ -51,19 +51,29 @@ const getNewsByKeyword = async() => {
 document.querySelector(".search-button").addEventListener("click", getNewsByKeyword);
 
 const render = () => {
-    const newsHTML = newsList.map(news => `
-        <div class="row news">
-          <div class="col-lg-4">
-            <img class="news-img-size" src="${news.urlToImage}" alt="">
-          </div>
-          <div class="col-lg-8">
-            <h2>${news.title}</h2>
-            <p>${news.description}</p>
-            <div>${news.source.name} * ${news.publishedAt}</div>
-          </div>
-        </div>`).join(''); // 배열에 있는 , 지우기 위해 .join 사용
+  console.log(newsList)
+  const newsHTML = newsList.map(news => {
+    const newsTitle = (news.title === "[Removed]")? "삭제된 기사 입니다.": news.title;
+    const newsDescription = (news.description === null || news.description === "[Removed]")? "내용없음" : (news.description.length > 200)
+      ? `${news.description.slice(0, 200)}...`
+      : news.description;
+    const newsImage = (news.urlToImage != null)? `${news.urlToImage}`: "src/image-not-available.png";
+    const newsSource = (news.source.name === null || news.source.name === "[Removed]")? "no source": news.source.name;
+    const newsPublishedAt = moment(news.publishedAt).startOf('day').fromNow();
 
-    document.getElementById("news-board").innerHTML = newsHTML
+    return `
+    <div class="row news">
+      <div class="col-lg-4">
+        <img class="news-img-size" src="${newsImage}" alt="${newsTitle}">
+      </div>
+      <div class="col-lg-8">
+        <h2>${newsTitle}</h2>
+        <p>${newsDescription}</p>
+        <div>${newsSource} * ${newsPublishedAt}</div>
+      </div>
+    </div>`}).join(''); // 배열에 있는 , 지우기 위해 .join 사용
+
+  document.getElementById("news-board").innerHTML = newsHTML
 }
 
 const errorRender = (errorMessage) => {

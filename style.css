@@ -30,6 +30,8 @@
 .news-img-size {
     max-width: 100%;
     max-height: 250px;
+    /* margin: auto; no image available 이미지 파일 중앙 위치
+    display: block; */
 }
 
 .news {
