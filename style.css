@@ -37,3 +37,30 @@
 .news {
     border-bottom: 1px solid #ebebeb;
 }
+
+.search-area {
+  display: flex;
+  margin-top: 10px;
+  width: 255px;
+  height: 30px;
+  justify-content: space-between;
+}
+
+#search-box {
+  display: none;
+}
+
+.search-icon {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.search-button {
+  background-color: rgb(108, 143, 170);
+  border-radius: 0.3em;
+  border: none;
+  color: white;
+  width: 32px;
+  height: 30px;
+  text-align: center;
+}

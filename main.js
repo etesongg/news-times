@@ -93,4 +93,14 @@ const enterkey = () => {
 
 document.querySelector("#search-input").addEventListener("keyup", enterkey);
 
+const openSearchBox = () => {
+  let searchArea = document.getElementById("search-box");
+  if(searchArea.style.display === "none"){
+    searchArea.style.display = "inline";
+  }else{
+    searchArea.style.display = "none";
+  }
+}
+document.querySelector(".search-icon").addEventListener("click", openSearchBox);
+
 
