@@ -24,7 +24,8 @@
 }
 
 .menus button:hover {
-    background-color: beige;
+    background-color: rgb(150, 175, 194);
+    border-radius: 3px;
 }
 
 .news-img-size {
@@ -63,6 +64,10 @@
   text-align: center;
 }
 
+.search-button:hover {
+  background-color: rgb(92, 132, 160);
+}
+
 /* 사이드 메뉴 */
 .side-menu {
   height: 100%;
@@ -71,7 +76,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: burlywood;
+  background-color: rgb(150, 175, 194);
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -100,7 +105,7 @@
 }
 
 .side-menu-list button:hover {
-  background-color: beige;
+  background-color: rgb(108, 143, 170);
   border-radius: 3px;
 }
 
