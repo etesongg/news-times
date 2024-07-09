@@ -29,9 +29,17 @@ const getNewsByCategory = async (event) =>{
     render()
 }
 
-const getNewsByKeyword = () => {
-    console.log("키워드")
+
+const getNewsByKeyword = async() => {
+  const keyword = document.getElementById("search-input").value;
+  const url = new URL(`${API_URL}?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  const response = await fetch(url);
+  const data = await response.json();
+  newsList = data.articles;
+  render()
 }
+
+document.querySelector(".search-button").addEventListener("click", getNewsByKeyword);
 
 const render = () => {
     const newsHTML = newsList.map(news => `
@@ -49,25 +57,8 @@ const render = () => {
     document.getElementById("news-board").innerHTML = newsHTML
 }
 
-
-
-
-
-// 사이드 메뉴
-// const openNav = () => {
-//     console.log("openNav")
-//     document.getElementById("mySidenav").style.width = "250px";
-//   };
-  
-// const closeNav = () => {
-//     document.getElementById("mySidenav").style.width = "0";
-//   };
-
-//   const openSearchBox = () => {
-//     let inputArea = document.getElementById("input-area");
-//     if (inputArea.style.display === "inline") {
-//       inputArea.style.display = "none";
-//     } else {
-//       inputArea.style.display = "inline";
-//     }
-//   };
+// const enterkey = () => {
+//   if(window.event.keyCode == 13){
+//       getNewsByKeyword();
+//   }
+// }
