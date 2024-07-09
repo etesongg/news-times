@@ -85,8 +85,12 @@ const errorRender = (errorMessage) => {
   document.getElementById("news-board").innerHTML = errorHTML
 }
 
-// const enterkey = () => {
-//   if(window.event.keyCode == 13){
-//       getNewsByKeyword();
-//   }
-// }
+const enterkey = () => {
+  if(window.event.keyCode == 13){
+      getNewsByKeyword();
+  }
+}
+
+document.querySelector("#search-input").addEventListener("keyup", enterkey);
+
+
