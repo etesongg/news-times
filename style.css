@@ -104,6 +104,10 @@
   align-items: center;
 }
 
+.side-menu button {
+  color: white;
+}
+
 .side-menu-list button:hover {
   background-color: rgb(108, 143, 170);
   border-radius: 3px;
