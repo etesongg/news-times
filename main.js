@@ -56,6 +56,7 @@ const getNewsByCategory = async (event) =>{
 const getNewsByKeyword = async() => {
   const keyword = document.getElementById("search-input").value;
   url = new URL(`${API_URL}?country=us&q=${keyword}&apiKey=${API_KEY}`);
+  page = 1; // 검색 후 페이지 1로 설정
   getNews();
 }
 
@@ -138,6 +139,7 @@ document.querySelector(".closebtn").addEventListener("click", closeNav);
 // totalResult(전체 결과 수), page(현재 페이지), pageSize(한번에 보여주는 페이지 사이즈), groupSize(한 페이지에 몇개 그룹으로 보여줄 수) => 내가 초기화 해줘야 할 값
 // 위를 통해 totalPages(총 페이지 수), pageGroup(현재 페이지가 속한 그룹), lastPage(현재 페이지의 마지막 페이지), firstPage(현재 페이지의 첫번째 페이지)를 계산할 수 있음
 const paginationRender = () => {
+  let paginationHTML = ""
   const totalPages = Math.ceil(totalResults/pageSize);
   const pageGroup = Math.ceil(page/groupSize);
   let lastPage = pageGroup * groupSize;
@@ -145,14 +147,22 @@ const paginationRender = () => {
     lastPage = totalPages
   }
   let firstPage = lastPage - (groupSize - 1)<=0? 1:lastPage - (groupSize - 1);
-
-  let paginationHTML = `<li class="page-item ${page === 1? "disabled":""}"><a class="page-link" pageNum="${page-1}" >Previous</a></li>`
+  if(firstPage >= groupSize+1){
+    paginationHTML = 
+    `<li class="page-item ${page === 1? "disabled":""}"><a class="page-link" pageNum="${1}" >&lt&lt</a></li>
+    <li class="page-item ${page === 1? "disabled":""}"><a class="page-link" pageNum="${page-1}" >&lt</a></li>`
+  }
+  
+  if(lastPage > totalPages){
+    lastPage = totalPages;
+  }
 
   for(let i=firstPage; i<=lastPage; i++){
     paginationHTML += `<li class="page-item ${i === page? "active":""}" ><a class="page-link" pageNum="${i}">${i}</a></li>`
   }
-
-  paginationHTML += `<li class="page-item ${page === totalPages? "active":""}"><a class="page-link" pageNum="${page+1}" >Next</a></li>`
+  if(lastPage < totalPages)
+  paginationHTML += `<li class="page-item ${page === totalPages? "disabled":""}"><a class="page-link" pageNum="${page+1}" >&gt</a></li>
+  <li class="page-item ${page === totalPages? "disabled":""}"><a class="page-link" pageNum="${totalPages}" >&gt&gt</a></li>`
 
   document.querySelector(".pagination").innerHTML = paginationHTML
 
