@@ -9,14 +9,25 @@ let url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
 const menus = document.querySelectorAll(".menus button, .side-menu-list")
 menus.forEach(menu => menu.addEventListener("click", (event) => getNewsByCategory(event)))
 
+// 페이지네이션 기본 값 설정
+let totalResults = 0;
+let page = 1;
+const pageSize = 10;
+const groupSize = 5;
+
 const getNews = async() => {
   try{
+    url.searchParams.set("page", page); // 페이지네이션을 위한 파라미터 값을 추가한 후 url을 호출(fetch(url)) 해야함.  
+    url.searchParams.set("pageSize", pageSize);
+
     const response = await fetch(url);
     const data = await response.json();
     if(response.status === 200){
       if(data.articles.length != 0){
         newsList = data.articles;
+        totalResults = data.totalResults
         render();
+        paginationRender();
       }else{
         throw new Error("No result for this search")
       }
@@ -113,4 +124,41 @@ const closeNav = () => {
   document.getElementById("mySidenav").style.width = "0";
 };
 document.querySelector(".closebtn").addEventListener("click", closeNav);
+
+// 페이지네이션
+// totalResult(전체 결과 수), page(현재 페이지), pageSize(한번에 보여주는 페이지 사이즈), groupSize(한 페이지에 몇개 그룹으로 보여줄 수) => 내가 초기화 해줘야 할 값
+// 위를 통해 totalPages(총 페이지 수), pageGroup(현재 페이지가 속한 그룹), lastPage(현재 페이지의 마지막 페이지), firstPage(현재 페이지의 첫번째 페이지)를 계산할 수 있음
+const paginationRender = () => {
+  const totalPages = Math.ceil(totalResults/pageSize);
+  const pageGroup = Math.ceil(page/groupSize);
+  let lastPage = pageGroup * groupSize;
+  if(lastPage > totalPages){
+    lastPage = totalPages
+  }
+  let firstPage = lastPage - (groupSize - 1)<=0? 1:lastPage - (groupSize - 1);
+
+  let paginationHTML = `<li class="page-item ${page === 1? "disabled":""}"><a class="page-link" pageNum="${page-1}" >Previous</a></li>`
+
+  for(let i=firstPage; i<=lastPage; i++){
+    paginationHTML += `<li class="page-item ${i === page? "active":""}" ><a class="page-link" pageNum="${i}">${i}</a></li>`
+  }
+
+  paginationHTML += `<li class="page-item ${page === totalPages? "active":""}"><a class="page-link" pageNum="${page+1}" >Next</a></li>`
+
+  document.querySelector(".pagination").innerHTML = paginationHTML
+
+  document.querySelectorAll(".page-item").forEach(item => {
+    item.addEventListener("click", moveToPage);
+  });
+}
+
+const moveToPage = (event) => {
+  const pageNum = parseInt(event.target.getAttribute('pageNum')); // parseInt 문자열을 정수로 변환하는 역할.
+  // 현재페이지가 계산한 페이지 수 범위 안(1 ~ Math.ceil(totalResults / pageSize)) 일때 랜더 해야함.
+  if (pageNum > 0 && pageNum <= Math.ceil(totalResults / pageSize)) {
+    page = pageNum;
+    paginationRender();
+    getNews()
+  }
+};
 
