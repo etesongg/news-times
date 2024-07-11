@@ -65,27 +65,36 @@ const render = () => {
   console.log(newsList)
   const newsHTML = newsList.map(news => {
     const newsTitle = (news.title === "[Removed]")? "삭제된 기사 입니다.": news.title;
-    const newsDescription = (news.description === null || news.description === "[Removed]")? "내용없음" : (news.description.length > 200)
+    const newsDescription = (news.description === "" || news.description === null || news.description === "[Removed]")? "내용없음" : (news.description.length > 200)
       ? `${news.description.slice(0, 200)}...`
       : news.description;
     const newsImage = (news.urlToImage != null)? `${news.urlToImage}`: "src/image-not-available.png";
     const newsSource = (news.source.name === null || news.source.name === "[Removed]")? "no source": news.source.name;
     const newsPublishedAt = moment(news.publishedAt).startOf('day').fromNow();
+    const newsUrl = (news.url === "https://removed.com")? "https://www.nytimes.com/" : news.url; 
 
     return `
-    <div class="row news">
+    <a href="${newsUrl}" target="_blank" class="news-a-tag">
+     <div class="row news">
       <div class="col-lg-4">
         <img class="news-img-size" src="${newsImage}" alt="${newsTitle}">
       </div>
       <div class="col-lg-8">
-        <h2>${newsTitle}</h2>
-        <p>${newsDescription}</p>
-        <div>${newsSource} * ${newsPublishedAt}</div>
+       <h2>${newsTitle}</h2>
+       <p>${newsDescription}</p>
+       <div>${newsSource} * ${newsPublishedAt}</div>
       </div>
-    </div>`}).join(''); // 배열에 있는 , 지우기 위해 .join 사용
+     </div>
+    </a>`}).join(''); // 배열에 있는 , 지우기 위해 .join 사용
+  
+  document.getElementById("news-board").innerHTML = newsHTML;
 
-  document.getElementById("news-board").innerHTML = newsHTML
-}
+  document.querySelectorAll(".news-img-size").forEach(item => {
+    item.addEventListener("error", function() {
+      this.src="src/image-not-available.png";
+    });
+  });
+};
 
 const errorRender = (errorMessage) => {
   const errorHTML = `

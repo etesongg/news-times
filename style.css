@@ -68,6 +68,15 @@
   background-color: rgb(92, 132, 160);
 }
 
+.news-a-tag ,.news-a-tag:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.news:hover {
+  transform: scale(0.95);
+}
+
 /* 사이드 메뉴 */
 .side-menu {
   height: 100%;
