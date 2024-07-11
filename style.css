@@ -77,6 +77,14 @@
   transform: scale(0.95);
 }
 
+/* 페이지네이션 */
+.pagination {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 /* 사이드 메뉴 */
 .side-menu {
   height: 100%;
@@ -155,3 +163,4 @@
     border-bottom: 4px double black;
   }
 } 
+
