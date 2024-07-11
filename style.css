@@ -1,42 +1,42 @@
 .head-line {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
 }
 
 .head-line svg {
-    width: 430px;
+  width: 430px;
 }
 
 .menus {
-    margin-top: 1em;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap; /* 상위 클래스 기준 영역을 넘어서 보여주지 않는다 */
-    border-top: 1px solid #ebebeb;
-    border-bottom: 4px double black;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* 상위 클래스 기준 영역을 넘어서 보여주지 않는다 */
+  border-top: 1px solid #ebebeb;
+  border-bottom: 4px double black;
 }
 
 .menus button {
-    border: none;
-    background: none;
-    margin: 5px;
+  border: none;
+  background: none;
+  margin: 5px;
 }
 
 .menus button:hover {
-    background-color: rgb(150, 175, 194);
-    border-radius: 3px;
+  background-color: rgb(150, 175, 194);
+  border-radius: 3px;
 }
 
 .news-img-size {
-    max-width: 100%;
-    max-height: 250px;
-    /* margin: auto; no image available 이미지 파일 중앙 위치
+  max-width: 100%;
+  max-height: 250px;
+  /* margin: auto; no image available 이미지 파일 중앙 위치
     display: block; */
 }
 
 .news {
-    border-bottom: 1px solid #ebebeb;
+  border-bottom: 1px solid #ebebeb;
 }
 
 .search-area {
@@ -68,7 +68,8 @@
   background-color: rgb(92, 132, 160);
 }
 
-.news-a-tag ,.news-a-tag:hover {
+.news-a-tag,
+.news-a-tag:hover {
   text-decoration: none;
   color: inherit;
 }
@@ -131,36 +132,35 @@
 }
 
 /* 기본 카테고리 없어짐과 동시에 햄버거 버튼 */
-.icon-button.hamburger-icon{
+.icon-button.hamburger-icon {
   display: none;
   margin-right: 7px;
 }
 
 @media screen and (max-width: 768px) {
   .menus {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      display: none;
-      position: absolute;
-      top: 50px; 
-      background-color: burlywood; 
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    display: none;
+    position: absolute;
+    top: 50px;
+    background-color: burlywood;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
   .menus.show-menu {
-      display: flex;
+    display: flex;
   }
   .menus button {
-      width: 100%;
-      text-align: center;
+    width: 100%;
+    text-align: center;
   }
   .fas.fa-bars {
-      justify-content: center;
-      display: block;
+    justify-content: center;
+    display: block;
   }
   .head-line {
     padding-bottom: 1em;
     border-bottom: 4px double black;
   }
-} 
-
+}
