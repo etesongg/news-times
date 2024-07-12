@@ -43,7 +43,7 @@ const getNews = async () => {
 
 const getLatestNews = async () => {
   url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
-  getNews();
+  await getNews();
 };
 getLatestNews();
 
@@ -52,14 +52,14 @@ getLatestNews();
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   url = new URL(`${API_URL}?country=us&category=${category}&apiKey=${API_KEY}`);
-  getNews();
+  await getNews();
 };
 
 const getNewsByKeyword = async () => {
   const keyword = document.getElementById("search-input").value;
   url = new URL(`${API_URL}?country=us&q=${keyword}&apiKey=${API_KEY}`);
   page = 1; // 검색 후 페이지 1로 설정
-  getNews();
+  await getNews();
 };
 
 document
@@ -114,7 +114,7 @@ const render = () => {
 
   document.querySelectorAll(".news-img-size").forEach((item) => {
     item.addEventListener("error", function () {
-      this.src = "src/image-not-available.png";
+      this.src = "static/src/image-not-available.png";
     });
   });
 };
@@ -203,12 +203,12 @@ const paginationRender = () => {
   });
 };
 
-const moveToPage = (event) => {
+const moveToPage = async (event) => {
   const pageNum = parseInt(event.target.getAttribute("pageNum")); // parseInt 문자열을 정수로 변환하는 역할.
   // 현재페이지가 계산한 페이지 수 범위 안(1 ~ Math.ceil(totalResults / pageSize)) 일때 랜더 해야함.
   if (pageNum > 0 && pageNum <= Math.ceil(totalResults / pageSize)) {
     page = pageNum;
     paginationRender();
-    getNews();
+    await getNews();
   }
 };
