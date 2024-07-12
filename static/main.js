@@ -6,16 +6,16 @@ const API_URL = KEY.API_URL;
 
 let newsList = [];
 let url = new URL(`${API_URL}?country=us&apiKey=${API_KEY}`);
-const menus = document.querySelectorAll(".menus button, .side-menu-list");
-menus.forEach((menu) =>
-  menu.addEventListener("click", (event) => getNewsByCategory(event))
-);
-
 // 페이지네이션 기본 값 설정
 let totalResults = 0;
 let page = 1;
 const pageSize = 10;
 const groupSize = 5;
+
+const menus = document.querySelectorAll(".menus button, .side-menu-list");
+menus.forEach((menu) =>
+  menu.addEventListener("click", (event) => getNewsByCategory(event))
+);
 
 const getNews = async () => {
   try {
@@ -52,6 +52,7 @@ getLatestNews();
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
   url = new URL(`${API_URL}?country=us&category=${category}&apiKey=${API_KEY}`);
+  page = 1;
   await getNews();
 };
 
@@ -62,12 +63,7 @@ const getNewsByKeyword = async () => {
   await getNews();
 };
 
-document
-  .querySelector(".search-button")
-  .addEventListener("click", getNewsByKeyword);
-
 const render = () => {
-  console.log(newsList);
   const newsHTML = newsList
     .map((news) => {
       const newsTitle =
@@ -83,7 +79,7 @@ const render = () => {
       const newsImage =
         news.urlToImage != null
           ? `${news.urlToImage}`
-          : "src/image-not-available.png";
+          : "static/src/image-not-available.png";
       const newsSource =
         news.source.name === null || news.source.name === "[Removed]"
           ? "no source"
@@ -134,68 +130,60 @@ const enterkey = () => {
   }
 };
 
-document.querySelector("#search-input").addEventListener("keyup", enterkey);
-
-const openSearchBox = () => {
-  let searchArea = document.getElementById("search-box");
-  if (searchArea.style.display === "none") {
-    searchArea.style.display = "inline";
-  } else {
-    searchArea.style.display = "none";
-  }
+const toggleSearchBox = () => {
+  const searchArea = document.getElementById("search-box");
+  searchArea.style.display = searchArea.style.display === "none"? "inline" : "none"
 };
-document.querySelector(".search-icon").addEventListener("click", openSearchBox);
 
 // 사이드 메뉴
 const openNav = () => {
   document.getElementById("mySidenav").style.width = "250px";
 };
-document.querySelector(".hamburger-icon").addEventListener("click", openNav);
 
 const closeNav = () => {
   document.getElementById("mySidenav").style.width = "0";
 };
-document.querySelector(".closebtn").addEventListener("click", closeNav);
 
 // 페이지네이션
 // totalResult(전체 결과 수), page(현재 페이지), pageSize(한번에 보여주는 페이지 사이즈), groupSize(한 페이지에 몇개 그룹으로 보여줄 수) => 내가 초기화 해줘야 할 값
 // 위를 통해 totalPages(총 페이지 수), pageGroup(현재 페이지가 속한 그룹), lastPage(현재 페이지의 마지막 페이지), firstPage(현재 페이지의 첫번째 페이지)를 계산할 수 있음
 const paginationRender = () => {
-  let paginationHTML = "";
   const totalPages = Math.ceil(totalResults / pageSize);
   const pageGroup = Math.ceil(page / groupSize);
   let lastPage = pageGroup * groupSize;
+  const firstPage = lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+  
+  let paginationHTML = "";
   if (lastPage > totalPages) {
     lastPage = totalPages;
-  }
-  let firstPage =
-    lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
-  if (firstPage >= groupSize + 1) {
-    paginationHTML = `<li class="page-item ${
-      page === 1 ? "disabled" : ""
-    }"><a class="page-link" pageNum="${1}" href="#">&lt&lt</a></li>
-    <li class="page-item ${
-      page === 1 ? "disabled" : ""
-    }"><a class="page-link" pageNum="${page - 1}" href="#">&lt</a></li>`;
   }
 
-  if (lastPage > totalPages) {
-    lastPage = totalPages;
+  if (firstPage >= groupSize + 1) {
+    paginationHTML = `
+      <li class="page-item ${page === 1 ? "disabled" : ""}">
+        <a class="page-link" pageNum="${1}" href="#">&lt&lt</a>
+      </li>
+      <li class="page-item ${page === 1 ? "disabled" : ""}">
+        <a class="page-link" pageNum="${page - 1}" href="#">&lt</a>
+      </li>`;
   }
 
   for (let i = firstPage; i <= lastPage; i++) {
-    paginationHTML += `<li class="page-item ${
-      i === page ? "active" : ""
-    }" ><a class="page-link" pageNum="${i}" href="#">${i}</a></li>`;
+    paginationHTML += `
+      <li class="page-item ${i === page ? "active" : ""}" >
+        <a class="page-link" pageNum="${i}" href="#">${i}</a>
+      </li>`;
   }
-  if (lastPage < totalPages)
-    paginationHTML += `<li class="page-item ${
-      page === totalPages ? "disabled" : ""
-    }"><a class="page-link" pageNum="${page + 1}" href="#">&gt</a></li>
-  <li class="page-item ${
-    page === totalPages ? "disabled" : ""
-  }"><a class="page-link" pageNum="${totalPages}" href="#">&gt&gt</a></li>`;
 
+  if (lastPage < totalPages) {
+    paginationHTML += `
+      <li class="page-item ${page === totalPages ? "disabled" : ""}">
+        <a class="page-link" pageNum="${page + 1}" href="#">&gt</a>
+      </li>
+      <li class="page-item ${page === totalPages ? "disabled" : ""}">
+        <a class="page-link" pageNum="${totalPages}" href="#">&gt&gt</a>
+      </li>`;
+  }
   document.querySelector(".pagination").innerHTML = paginationHTML;
 
   document.querySelectorAll(".page-item").forEach((item) => {
@@ -212,3 +200,12 @@ const moveToPage = async (event) => {
     await getNews();
   }
 };
+
+const makeEventListener = () => {
+  document.querySelector(".search-button").addEventListener("click", getNewsByKeyword);
+  document.querySelector("#search-input").addEventListener("keyup", enterkey);
+  document.querySelector(".search-icon").addEventListener("click", toggleSearchBox);
+  document.querySelector(".hamburger-icon").addEventListener("click", openNav);
+  document.querySelector(".closebtn").addEventListener("click", closeNav);
+}
+makeEventListener();
