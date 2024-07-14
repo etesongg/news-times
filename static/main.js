@@ -158,7 +158,7 @@ const paginationRender = () => {
     lastPage = totalPages;
   }
 
-  if (firstPage >= groupSize + 1) {
+  if (page >= 2) {
     paginationHTML = `
       <li class="page-item ${page === 1 ? "disabled" : ""}">
         <a class="page-link" pageNum="${1}" href="#">&lt&lt</a>
@@ -175,7 +175,7 @@ const paginationRender = () => {
       </li>`;
   }
 
-  if (lastPage < totalPages) {
+  if (page < totalPages) {
     paginationHTML += `
       <li class="page-item ${page === totalPages ? "disabled" : ""}">
         <a class="page-link" pageNum="${page + 1}" href="#">&gt</a>
