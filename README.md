@@ -1,6 +1,13 @@
 # news-times 사이트 제작(javascript-study 3)
 
 ## The News Times website
+![news-times-1](https://github.com/user-attachments/assets/a311b98b-6b93-45d0-a793-ee897c602c66)
+
+<details>
+  <summary> 반응형 </summary>
+
+   ![news-times-2](https://github.com/user-attachments/assets/34b50043-b411-4c8e-bafa-a2402ef2f008)
+</details>
 
 [위 사이트 접속하기](https://news-timesbysong.netlify.app/)
 
